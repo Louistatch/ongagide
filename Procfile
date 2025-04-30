@@ -1,0 +1,1 @@
+web: gunicorn agide.wsgi:application --log-file - 
