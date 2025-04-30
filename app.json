@@ -12,7 +12,7 @@
     },
     "ALLOWED_HOSTS": {
       "description": "Hôtes autorisés",
-      "value": "localhost,127.0.0.1,ongagide.onrender.com,*.digitaloceanspaces.com"
+      "value": "localhost,127.0.0.1,ongagide.onrender.com,*.digitaloceanspaces.com,agide-app-oyzs9.ondigitalocean.app,*.ondigitalocean.app"
     }
   },
   "buildpacks": [
