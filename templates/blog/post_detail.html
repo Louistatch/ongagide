@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load blog_tags %}
+
+{% block title %}{{ post.title }} - Blog AGIDE{% endblock %}
+
+{% block meta_description %}{{ post.excerpt|striptags|truncatewords:30 }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="blog-post">
+    <header class="post-header mb-4">
+        <h1 class="display-4 fw-bold">{{ post.title }}</h1>
+        <div class="post-meta text-muted mb-3">
+            <span class="me-3">
+                <i class="fas fa-user me-1"></i>
+                {{ post.author.get_full_name|default:post.author.username }}
+            </span>
+            <span class="me-3">
+                <i class="fas fa-calendar me-1"></i>
+                {{ post.publish_date|date:"d F Y" }}
+            </span>
+            <span class="me-3">
+                <i class="fas fa-eye me-1"></i>
+                {{ post.views }} vues
+            </span>
+            <span class="me-3">
+                <i class="fas fa-comments me-1"></i>
+                {{ post|get_comment_count }} commentaires
+            </span>
+        </div>
+        {% if post.featured_image %}
+        <div class="post-image mb-4">
+            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid rounded">
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="post-content mb-5">
+        {{ post.content|safe }}
+    </div>
+
+    <div class="post-footer mb-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="post-categories">
+                {% for category in post.categories.all %}
+                <a href="{{ category.get_absolute_url }}" class="badge bg-primary text-decoration-none me-2">
+                    {{ category.name }}
+                </a>
+                {% endfor %}
+            </div>
+            <div class="post-actions">
+                <button class="btn btn-outline-primary like-post" data-post-id="{{ post.id }}">
+                    <i class="fas fa-heart me-1"></i>
+                    <span class="likes-count">{{ post|get_like_count }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Commentaires -->
+    <section class="comments-section mb-5">
+        <h3 class="h4 mb-4">Commentaires ({{ post|get_comment_count }})</h3>
+        
+        {% if user.is_authenticated %}
+        <div class="comment-form mb-4">
+            <form method="post" action="{% url 'blog:add_comment' post.id %}" class="needs-validation" novalidate>
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="btn btn-primary mt-3">
+                    <i class="fas fa-paper-plane me-1"></i> Publier
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            Veuillez <a href="{% url 'accounts:login' %}">vous connecter</a> pour laisser un commentaire.
+        </div>
+        {% endif %}
+
+        <div class="comments-list">
+            {% for comment in comments %}
+            <div class="comment card mb-3" id="comment-{{ comment.id }}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="comment-author">
+                            <strong>{{ comment.author.get_full_name|default:comment.author.username }}</strong>
+                            <small class="text-muted ms-2">{{ comment.created_at|timesince }}</small>
+                        </div>
+                        <div class="comment-actions">
+                            <button class="btn btn-sm btn-outline-primary like-comment" data-comment-id="{{ comment.id }}">
+                                <i class="fas fa-heart me-1"></i>
+                                <span class="likes-count">{{ comment|get_like_count }}</span>
+                            </button>
+                            {% if user.is_authenticated %}
+                            <button class="btn btn-sm btn-outline-secondary reply-comment" data-comment-id="{{ comment.id }}">
+                                <i class="fas fa-reply me-1"></i> Répondre
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        {{ comment.content|safe }}
+                    </div>
+                    
+                    <!-- Réponses -->
+                    {% for reply in comment.replies.all %}
+                    <div class="reply ms-4 mt-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div class="reply-author">
+                                        <strong>{{ reply.author.get_full_name|default:reply.author.username }}</strong>
+                                        <small class="text-muted ms-2">{{ reply.created_at|timesince }}</small>
+                                    </div>
+                                    <div class="reply-actions">
+                                        <button class="btn btn-sm btn-outline-primary like-comment" data-comment-id="{{ reply.id }}">
+                                            <i class="fas fa-heart me-1"></i>
+                                            <span class="likes-count">{{ reply|get_like_count }}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="reply-content">
+                                    {{ reply.content|safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Aucun commentaire pour le moment. Soyez le premier à commenter !
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</article>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion des likes pour les articles
+    document.querySelectorAll('.like-post').forEach(button => {
+        button.addEventListener('click', function() {
+            const postId = this.dataset.postId;
+            fetch(`/blog/like-post/${postId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const icon = this.querySelector('i');
+                const count = this.querySelector('.likes-count');
+                
+                if (data.liked) {
+                    icon.classList.add('text-danger');
+                } else {
+                    icon.classList.remove('text-danger');
+                }
+                count.textContent = data.likes_count;
+            });
+        });
+    });
+
+    // Gestion des likes pour les commentaires
+    document.querySelectorAll('.like-comment').forEach(button => {
+        button.addEventListener('click', function() {
+            const commentId = this.dataset.commentId;
+            fetch(`/blog/like-comment/${commentId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const icon = this.querySelector('i');
+                const count = this.querySelector('.likes-count');
+                
+                if (data.liked) {
+                    icon.classList.add('text-danger');
+                } else {
+                    icon.classList.remove('text-danger');
+                }
+                count.textContent = data.likes_count;
+            });
+        });
+    });
+
+    // Gestion des réponses aux commentaires
+    document.querySelectorAll('.reply-comment').forEach(button => {
+        button.addEventListener('click', function() {
+            const commentId = this.dataset.commentId;
+            const commentForm = document.querySelector('.comment-form form');
+            const parentInput = commentForm.querySelector('[name="parent"]');
+            parentInput.value = commentId;
+            
+            // Faire défiler jusqu'au formulaire
+            commentForm.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+});
+</script>
+{% endblock %} 

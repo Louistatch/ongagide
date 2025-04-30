@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}À propos - ONG AGIDE{% endblock %}
+
+{% block meta_description %}Découvrez l'histoire, la mission et les valeurs de l'ONG AGIDE, une association engagée pour une agriculture durable en Afrique.{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section position-relative overflow-hidden mb-5">
+    <div class="position-absolute w-100 h-100">
+        <img src="{% static 'images/photorealistic.jpg' %}" alt="À propos de l'ONG AGIDE" class="w-100 h-100 object-cover opacity-20" style="max-height: 400px;">
+    </div>
+    <div class="container position-relative py-5">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold text-white mb-4">À propos de l'ONG AGIDE</h1>
+                <p class="lead text-white-50">Une vision pour une agriculture durable en Afrique</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Notre Histoire -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <img src="{% static 'images/natur.jpg' %}" alt="Histoire ONG AGIDE" class="card-img-top object-cover" style="height: 300px;">
+                    <div class="card-body p-4">
+                        <h2 class="h1 fw-bold text-primary mb-4">Notre Histoire</h2>
+                        <p class="lead text-muted mb-4">
+                            Fondée en 2010, l'ONG AGIDE (Association pour la Gestion Intégrée et Durable de L'Environnement) est née d'une vision commune : restaurer la fertilité des sols et la santé des cultures en Afrique par des solutions naturelles et durables.
+                        </p>
+                        <p class="lead text-muted">
+                            Notre engagement en faveur de l'environnement et du développement durable nous a conduits à développer CHAMPIGROW, une gamme de produits naturels à base de champignons pour l'agriculture.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <img src="{% static 'images/hands-different.jpg' %}" alt="Mission ONG AGIDE" class="card-img-top object-cover" style="height: 300px;">
+                    <div class="card-body p-4">
+                        <h2 class="h1 fw-bold text-primary mb-4">Notre Mission</h2>
+                        <p class="lead text-muted mb-4">
+                            Notre mission est de transformer l'agriculture africaine en promouvant des pratiques durables et respectueuses de l'environnement.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-primary me-2"></i>
+                                Améliorer la fertilité des sols par des solutions naturelles
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-primary me-2"></i>
+                                Protéger les cultures avec des alternatives aux pesticides chimiques
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-primary me-2"></i>
+                                Former les agriculteurs aux pratiques durables
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Nos Valeurs -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="h1 fw-bold text-primary">Nos Valeurs</h2>
+                <p class="lead text-muted">Les principes qui guident nos actions</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-box bg-primary bg-opacity-10 rounded-circle mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <i class="fas fa-recycle fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="h4 fw-bold mb-3">Durabilité</h3>
+                        <p class="text-muted">Nous nous engageons à promouvoir des pratiques agricoles respectueuses de l'environnement et des générations futures.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-box bg-primary bg-opacity-10 rounded-circle mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <i class="fas fa-lightbulb fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="h4 fw-bold mb-3">Innovation</h3>
+                        <p class="text-muted">Nous développons des solutions innovantes basées sur la recherche et l'expérience terrain.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-box bg-primary bg-opacity-10 rounded-circle mx-auto mb-4" style="width: 80px; height: 80px;">
+                            <i class="fas fa-handshake fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="h4 fw-bold mb-3">Engagement</h3>
+                        <p class="text-muted">Nous sommes déterminés à améliorer les conditions de vie des agriculteurs africains.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Notre Équipe -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="h1 fw-bold text-primary">Notre Équipe</h2>
+                <p class="lead text-muted">Des experts passionnés par l'agriculture durable</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="team-member-img rounded-circle overflow-hidden mx-auto mb-4" style="width: 150px; height: 150px;">
+                            <img src="{% static 'images/hands-different.jpg' %}" alt="Directeur" class="w-100 h-100 object-cover">
+                        </div>
+                        <h3 class="h4 fw-bold mb-2">Directeur</h3>
+                        <p class="text-muted mb-3">Expert en agriculture durable</p>
+                        <p class="small text-muted">Plus de 20 ans d'expérience dans le développement agricole durable</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="team-member-img rounded-circle overflow-hidden mx-auto mb-4" style="width: 150px; height: 150px;">
+                            <img src="{% static 'images/photorealistic.jpg' %}" alt="Responsable Recherche" class="w-100 h-100 object-cover">
+                        </div>
+                        <h3 class="h4 fw-bold mb-2">Responsable Recherche</h3>
+                        <p class="text-muted mb-3">Spécialiste en microbiologie</p>
+                        <p class="small text-muted">Expert en développement de produits naturels pour l'agriculture</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <div class="team-member-img rounded-circle overflow-hidden mx-auto mb-4" style="width: 150px; height: 150px;">
+                            <img src="{% static 'images/natur.jpg' %}" alt="Responsable Terrain" class="w-100 h-100 object-cover">
+                        </div>
+                        <h3 class="h4 fw-bold mb-3">Responsable Terrain</h3>
+                        <p class="text-muted mb-3">Expert en vulgarisation</p>
+                        <p class="small text-muted">Spécialiste en formation des agriculteurs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm bg-primary text-white">
+                    <div class="card-body p-5 text-center">
+                        <h2 class="h1 fw-bold mb-4">Rejoignez-nous</h2>
+                        <p class="lead mb-4">Ensemble, cultivons un avenir durable pour l'Afrique</p>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-light btn-lg">
+                            <i class="fas fa-envelope me-2"></i>Nous contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

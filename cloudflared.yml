@@ -1,0 +1,6 @@
+tunnel: mon-tunnel
+credentials-file: /path/to/credentials.json
+ingress:
+  - hostname: mon-site.agide.tk
+    service: http://localhost:8000
+  - service: http_status:404 

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accueil - ONG AGIDE{% endblock %}
+
+{% block meta_description %}ONG AGIDE - Association pour la Gestion Intégrée et Durable de L'Environnement. Solutions naturelles pour une agriculture durable en Afrique.{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section position-relative overflow-hidden mb-5">
+    <div class="position-absolute w-100 h-100">
+        <img src="{% static 'images/photorealistic.jpg' %}" alt="ONG AGIDE - Agriculture Durable" class="w-100 h-100 object-cover opacity-20">
+    </div>
+    <div class="container position-relative py-5">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold text-white mb-4">Solutions Naturelles pour une Agriculture Durable</h1>
+                <p class="lead text-white-50">Découvrez CHAMPIGROW, notre gamme de produits naturels à base de champignons pour l'agriculture</p>
+                <div class="mt-4">
+                    <a href="{% url 'products:list' %}" class="btn btn-light btn-lg me-3">
+                        <i class="fas fa-seedling me-2"></i>Nos Produits
+                    </a>
+                    <a href="{% url 'contact:contact' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Nous Contacter
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- À propos -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="ratio ratio-16x9">
+                    <img src="{% static 'images/hands-different.jpg' %}" alt="À propos de l'ONG AGIDE" class="rounded-3 object-cover">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="h1 fw-bold text-primary mb-4">Qui sommes-nous ?</h2>
+                <p class="lead text-muted mb-4">
+                    ONG AGIDE (Association pour la Gestion Intégrée et Durable de L'Environnement) est une association engagée dans le développement de solutions naturelles pour l'agriculture en Afrique.
+                </p>
+                <p class="text-muted mb-4">
+                    Notre mission est de promouvoir des pratiques agricoles durables qui respectent l'environnement et améliorent la productivité des cultures.
+                </p>
+                <a href="{% url 'pages:about' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-leaf me-2"></i>En savoir plus
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Produits -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="h1 fw-bold text-primary">Nos Produits</h2>
+                <p class="lead text-muted">Découvrez notre gamme de solutions naturelles pour l'agriculture</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for product in products %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="ratio ratio-16x9">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img-top object-cover">
+                    </div>
+                    <div class="card-body p-4">
+                        <h3 class="h4 fw-bold mb-3">{{ product.name }}</h3>
+                        <p class="text-muted mb-4">{{ product.description|truncatewords:20 }}</p>
+                        <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary">
+                            <i class="fas fa-info-circle me-2"></i>En savoir plus
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>Aucun produit disponible pour le moment.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Blog -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="h1 fw-bold text-primary">Notre Blog</h2>
+                <p class="lead text-muted">Découvrez nos dernières actualités et conseils</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for post in posts %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    {% if post.featured_image %}
+                    <div class="ratio ratio-16x9">
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="card-img-top object-cover">
+                    </div>
+                    {% endif %}
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            {% for category in post.categories.all %}
+                            <span class="badge bg-primary me-2">{{ category.name }}</span>
+                            {% endfor %}
+                            <small class="text-muted">{{ post.publish_date|date:"d F Y" }}</small>
+                        </div>
+                        <h3 class="h4 fw-bold mb-3">{{ post.title }}</h3>
+                        <p class="text-muted mb-4">{{ post.excerpt|truncatewords:20 }}</p>
+                        <a href="{{ post.get_absolute_url }}" class="btn btn-outline-primary">
+                            <i class="fas fa-book-reader me-2"></i>Lire l'article
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>Aucun article disponible pour le moment.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm bg-primary text-white position-relative overflow-hidden">
+                    <div class="position-absolute w-100 h-100">
+                        <img src="{% static 'images/natur.jpg' %}" alt="Contact ONG AGIDE" class="w-100 h-100 object-cover opacity-10">
+                    </div>
+                    <div class="card-body p-5 text-center position-relative">
+                        <h2 class="h1 fw-bold mb-4">Contactez-nous</h2>
+                        <p class="lead mb-4">Vous avez des questions sur nos produits ou nos services ? N'hésitez pas à nous contacter.</p>
+                        <a href="{% url 'contact:contact' %}" class="btn btn-light btn-lg">
+                            <i class="fas fa-envelope me-2"></i>Nous contacter
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">
+                        {% if form.instance.pk %}
+                        Modifier l'article
+                        {% else %}
+                        Créer un nouvel article
+                        {% endif %}
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Titre -->
+                        <div class="mb-3">
+                            {{ form.title|as_crispy_field }}
+                        </div>
+
+                        <!-- Extrait -->
+                        <div class="mb-3">
+                            {{ form.excerpt|as_crispy_field }}
+                            <small class="form-text text-muted">
+                                Un court résumé qui apparaîtra dans la liste des articles.
+                            </small>
+                        </div>
+
+                        <!-- Contenu -->
+                        <div class="mb-3">
+                            {{ form.content|as_crispy_field }}
+                        </div>
+
+                        <!-- Image principale -->
+                        <div class="mb-3">
+                            {{ form.featured_image|as_crispy_field }}
+                            {% if form.instance.featured_image %}
+                            <div class="mt-2">
+                                <img src="{{ form.instance.featured_image.url }}" class="img-thumbnail" style="max-height: 200px;" alt="Image actuelle">
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Catégories -->
+                        <div class="mb-3">
+                            {{ form.categories|as_crispy_field }}
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="mb-3">
+                            {{ form.tags|as_crispy_field }}
+                            <small class="form-text text-muted">
+                                Séparez les tags par des virgules.
+                            </small>
+                        </div>
+
+                        <!-- Statut -->
+                        <div class="mb-3">
+                            {{ form.status|as_crispy_field }}
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="d-flex justify-content-between">
+                            <a href="{% if form.instance.pk %}{{ form.instance.get_absolute_url }}{% else %}{% url 'blog:post_list' %}{% endif %}" 
+                               class="btn btn-outline-secondary">
+                                Annuler
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                {% if form.instance.pk %}
+                                Enregistrer les modifications
+                                {% else %}
+                                Publier l'article
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialisation de TinyMCE pour l'éditeur de texte riche
+    tinymce.init({
+        selector: '#id_content',
+        height: 500,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | \
+                 alignleft aligncenter alignright alignjustify | \
+                 bullist numlist outdent indent | removeformat | help',
+        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 16px; }'
+    });
+
+    // Prévisualisation de l'image
+    const imageInput = document.querySelector('#id_featured_image');
+    if (imageInput) {
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.createElement('div');
+                    preview.className = 'mt-2';
+                    preview.innerHTML = `<img src="${e.target.result}" class="img-thumbnail" style="max-height: 200px;" alt="Prévisualisation">`;
+                    
+                    const existingPreview = document.querySelector('.mt-2 img');
+                    if (existingPreview) {
+                        existingPreview.parentNode.remove();
+                    }
+                    
+                    imageInput.parentNode.appendChild(preview);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
+</script>
+{% endblock %} 

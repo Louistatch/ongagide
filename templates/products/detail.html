@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - AGIDE{% endblock %}
+
+{% block meta_description %}{{ product.description|truncatewords:30 }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section position-relative overflow-hidden mb-5">
+    <div class="container position-relative py-4">
+        <div class="row justify-content-center text-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold text-white mb-3">{{ product.name }}</h1>
+                <p class="lead text-white-50">{{ product.description|truncatewords:30 }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product Detail -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        {% if product.image %}
+                        <div class="text-center mb-4">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <h2 class="h3 fw-bold text-primary mb-3">Description</h2>
+                                <div class="text-muted">
+                                    {{ product.description|linebreaks }}
+                                </div>
+                            </div>
+                            
+                            {% if product.benefits %}
+                            <div class="col-12">
+                                <h2 class="h3 fw-bold text-primary mb-3">Avantages</h2>
+                                <div class="text-muted">
+                                    {{ product.benefits|linebreaks }}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if product.usage %}
+                            <div class="col-12">
+                                <h2 class="h3 fw-bold text-primary mb-3">Mode d'emploi</h2>
+                                <div class="text-muted">
+                                    {{ product.usage|linebreaks }}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="text-center mt-5">
+                            <a href="{% url 'products:list' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left me-2"></i>Retour à la liste des produits
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 
