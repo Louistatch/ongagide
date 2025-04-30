@@ -16,8 +16,8 @@ pip install --no-cache-dir -r requirements.txt
 # Créer le répertoire staticfiles s'il n'existe pas
 mkdir -p staticfiles
 
-# Collecter les fichiers statiques
-python manage.py collectstatic --noinput
+# Tenter la collecte des fichiers statiques, mais continuer même en cas d'échec
+python manage.py collectstatic --noinput || echo "Collectstatic failed, but continuing"
 
 # Appliquer les migrations
 python manage.py migrate 

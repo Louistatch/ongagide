@@ -1,0 +1,23 @@
+{
+  "name": "ongagide",
+  "description": "Site web de l'ONG AGIDE",
+  "env": {
+    "DISABLE_COLLECTSTATIC": {
+      "description": "Désactiver la collecte des fichiers statiques",
+      "value": "1"
+    },
+    "DEBUG": {
+      "description": "Activer le mode débogage",
+      "value": "False"
+    },
+    "ALLOWED_HOSTS": {
+      "description": "Hôtes autorisés",
+      "value": "localhost,127.0.0.1,ongagide.onrender.com,*.digitaloceanspaces.com"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+} 

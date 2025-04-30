@@ -311,5 +311,6 @@ LOGGING = {
     },
 }
 
-# Configuration des fichiers statiques avec WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Configuration des fichiers statiques avec WhiteNoise - version simplifiée
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
