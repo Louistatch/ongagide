@@ -13,6 +13,10 @@
     "ALLOWED_HOSTS": {
       "description": "Hôtes autorisés",
       "value": "localhost,127.0.0.1,ongagide.onrender.com,*.digitaloceanspaces.com,agide-app-oyzs9.ondigitalocean.app,*.ondigitalocean.app"
+    },
+    "DO_SQLITE_PATH": {
+      "description": "Chemin vers le fichier SQLite sur DigitalOcean",
+      "value": "/data/db.sqlite3"
     }
   },
   "buildpacks": [

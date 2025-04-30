@@ -104,6 +104,7 @@ WSGI_APPLICATION = 'agide.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Configuration de la base de données par défaut (SQLite)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -117,6 +118,13 @@ if os.environ.get('DATABASE_URL'):
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
     )
+    
+# Pour DigitalOcean avec SQLite persistent
+if os.environ.get('DO_SQLITE_PATH'):
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.environ.get('DO_SQLITE_PATH', str(BASE_DIR / 'db.sqlite3')),
+    }
 
 
 # Password validation
