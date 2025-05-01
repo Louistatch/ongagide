@@ -117,7 +117,7 @@ if os.environ.get('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=False,  # Mettre True en production si SSL est requis
+        ssl_require=True,  # Activer SSL pour la connexion à Supabase
     )
     print("Utilisation de PostgreSQL via Supabase")
 # Configuration SQLite persistante sur DigitalOcean (désactivée si DATABASE_URL est défini)
