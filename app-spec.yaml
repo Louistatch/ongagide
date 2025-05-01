@@ -28,10 +28,10 @@ services:
         value: "agidetogo.com,www.agidetogo.com"
         scope: RUN_AND_BUILD_TIME
       - key: DATABASE_URL
-        value: 'postgresql://postgres:3991L%40uis1993@db.agidetogo.supabase.co:5432/postgres?sslmode=require'
+        value: 'postgresql://postgres:3991L%40uis1993@db.ptmoababqdwriwlicp.supabase.co:5432/postgres?sslmode=require'
         scope: RUN_AND_BUILD_TIME
       - key: SUPABASE_URL
-        value: "https://agidetogo.supabase.co"
+        value: "https://ptmoababqdwriwlicp.supabase.co"
         scope: RUN_AND_BUILD_TIME
       - key: SUPABASE_KEY
         value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0bW9hYmFvYnFkd3NyaXdsaWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwOTc0NjEsImV4cCI6MjA2MTY3MzQ2MX0.xrFeNs2YeUxTOdPF2bYvXj7kk_CZWe4Fe5CcDBuSvrM"
