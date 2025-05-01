@@ -23,5 +23,24 @@
     {
       "url": "heroku/python"
     }
+  ],
+  "services": [
+    {
+      "name": "web",
+      "environment_slug": "python",
+      "run_command": "gunicorn agide.wsgi:application",
+      "source_dir": "/",
+      "instance_size_slug": "basic-xxs",
+      "instance_count": 1,
+      "routes": [{"path": "/"}],
+      "volumes": ["sqlite-data"]
+    }
+  ],
+  "volumes": [
+    {
+      "name": "sqlite-data",
+      "mount_path": "/data",
+      "size_gigabytes": 1
+    }
   ]
-} 
+}
