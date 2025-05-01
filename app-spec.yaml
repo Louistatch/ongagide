@@ -11,7 +11,7 @@ services:
       repo: "Louistatch/ongagide"
       branch: "master"
     build_command: pip install -r requirements.txt && if [ "$DISABLE_COLLECTSTATIC" != "1" ]; then python manage.py collectstatic --noinput; fi
-    run_command: python manage.py migrate --noinput && gunicorn agide.wsgi:application --bind 0.0.0.0:$PORT
+    run_command: mkdir -p /data && python manage.py migrate --noinput && gunicorn agide.wsgi:application --bind 0.0.0.0:$PORT
     http_port: 8080
     routes:
       - path: /
