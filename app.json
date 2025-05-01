@@ -28,7 +28,7 @@
     {
       "name": "web",
       "environment_slug": "python",
-      "run_command": "gunicorn agide.wsgi:application",
+      "run_command": "python manage.py migrate --noinput && gunicorn agide.wsgi:application",
       "source_dir": "/",
       "instance_size_slug": "basic-xxs",
       "instance_count": 1,
