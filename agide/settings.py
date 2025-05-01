@@ -31,7 +31,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-^t+)smnf$)a*&kr0x$-d=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,yourusername.pythonanywhere.com,ongagide.onrender.com,agide-app-oyzs9.ondigitalocean.app,*.ondigitalocean.app,agidetogo.com,www.agidetogo.com').split(',')
+# Allow all hosts to avoid 400 errors
+ALLOWED_HOSTS = ['*']
 
 # Site ID
 SITE_ID = 1
