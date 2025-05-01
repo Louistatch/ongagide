@@ -16,11 +16,11 @@ import dotenv
 from dotenv import load_dotenv
 import dj_database_url
 
-# Charger les variables d'environnement depuis .env
-load_dotenv()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Charger les variables d'environnement depuis le fichier .env à la racine du projet
+load_dotenv(dotenv_path=BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -36,6 +36,11 @@ ALLOWED_HOSTS = os.environ.get('A0LLOWED_HOSTS', 'localhost,127.0.0.1,youruserna
 
 # Site ID
 SITE_ID = 1
+
+# Supabase Configuration
+SUPABASE_URL = os.environ.get('SUPABASE_URL', 'http://localhost')
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY', '')
+SUPABASE_JWT_SECRET = os.environ.get('SUPABASE_JWT_SECRET', '')
 
 # Application definition
 
