@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 import dotenv
 from dotenv import load_dotenv
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,11 +35,6 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,yourusernam
 
 # Site ID
 SITE_ID = 1
-
-# Supabase Configuration
-SUPABASE_URL = os.environ.get('SUPABASE_URL', 'http://localhost')
-SUPABASE_KEY = os.environ.get('SUPABASE_KEY', '')
-SUPABASE_JWT_SECRET = os.environ.get('SUPABASE_JWT_SECRET', '')
 
 # Application definition
 
