@@ -10,7 +10,7 @@ services:
     github:
       repo: "Louistatch/ongagide"
       branch: "master"
-    build_command: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    build_command: pip install -r requirements.txt && if [ "$DISABLE_COLLECTSTATIC" != "1" ]; then python manage.py collectstatic --noinput; fi
     run_command: python manage.py migrate --noinput && gunicorn agide.wsgi:application --bind 0.0.0.0:$PORT
     routes:
       - path: /
@@ -28,7 +28,7 @@ services:
         value: "agidetogo.com,www.agidetogo.com"
         scope: RUN_AND_BUILD_TIME
       - key: DATABASE_URL
-        value: "postgresql://postgres:3991L%40uis1993@db.agidetogo.supabase.co:5432/postgres?sslmode=require"
+        value: 'postgres://postgres:3991L%40uis1993@db.agidetogo.supabase.co:5432/postgres?sslmode=require'
         scope: RUN_AND_BUILD_TIME
       - key: SUPABASE_URL
         value: "https://agidetogo.supabase.co"
