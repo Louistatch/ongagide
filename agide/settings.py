@@ -109,42 +109,14 @@ WSGI_APPLICATION = 'agide.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Configuration par défaut - sera remplacée par Supabase si DATABASE_URL est défini
+# Configuration par défaut : SQLite permanente (local et production)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# Priorité à la configuration Supabase PostgreSQL
-if os.environ.get('DATABASE_URL'):
-    try:
-        # Test de connexion rapide à Supabase
-        import psycopg2
-        supabase_dsn = os.environ.get('DATABASE_URL')
-        conn = psycopg2.connect(supabase_dsn, connect_timeout=5)
-        conn.close()
-        # Appliquer la configuration PostgreSQL
-        DATABASES['default'] = dj_database_url.config(
-            default=supabase_dsn,
-            conn_max_age=600,
-            ssl_require=True,
-        )
-        print("Utilisation de PostgreSQL via Supabase")
-    except Exception as e:
-        # En cas d'échec, on reste sur SQLite
-        print(f"Impossible de se connecter à Supabase ({e}), utilisation de SQLite local")
-# Configuration SQLite persistante sur DigitalOcean (désactivée si DATABASE_URL est défini)
-elif os.environ.get('DO_SQLITE_PATH'):
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.environ.get('DO_SQLITE_PATH', str(BASE_DIR / 'db.sqlite3')),
     }
-    print("Utilisation de SQLite persistant sur DigitalOcean")
-else:
-    print("Utilisation de SQLite local")
-
+}
+print("Utilisation de SQLite permanente")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
