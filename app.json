@@ -20,7 +20,7 @@
     },
     "DATABASE_URL": {
       "description": "URL de connexion à la base de données PostgreSQL Supabase",
-      "value": "postgresql://postgres:3991L@uis1993@db.ptmoaboqbpdwsriwlicp.supabase.co:6543/postgres"
+      "value": "postgresql://postgres:3991L%40uis1993@db.ptmoaboqbpdwsriwlicp.supabase.co:6543/postgres"
     }
   },
   "buildpacks": [
