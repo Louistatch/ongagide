@@ -29,7 +29,7 @@ services:
         value: "django-insecure-^t+)smnf$)a*&kr0x$-d=q+0vtl%al=b0)3v9d)#o8uvcmftg&"
         scope: RUN_AND_BUILD_TIME
       - key: ALLOWED_HOSTS
-        value: "agidetogo.com,www.agidetogo.com"
+        value: "*.ondigitalocean.app,agidetogo.com,www.agidetogo.com"
         scope: RUN_AND_BUILD_TIME
       - key: DO_SQLITE_PATH
         value: "/data/db.sqlite3"
