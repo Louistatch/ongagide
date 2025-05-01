@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-^t+)smnf$)a*&kr0x$-d=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,yourusername.pythonanywhere.com,ongagide.onrender.com,agide-app-oyzs9.ondigitalocean.app,*.ondigitalocean.app,agidetogo.com,www.agidetogo.com').split(',')
+ALLOWED_HOSTS = os.environ.get('A0LLOWED_HOSTS', 'localhost,127.0.0.1,yourusername.pythonanywhere.com,ongagide.onrender.com,agide-app-oyzs9.ondigitalocean.app,*.ondigitalocean.app,agidetogo.com,www.agidetogo.com').split(',')
 
 # Site ID
 SITE_ID = 1
@@ -104,7 +104,7 @@ WSGI_APPLICATION = 'agide.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Configuration de la base de données par défaut (SQLite)
+# Configuration par défaut - sera remplacée par Supabase si DATABASE_URL est défini
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -112,19 +112,23 @@ DATABASES = {
     }
 }
 
-# Configuration pour PostgreSQL sur Render et autres hébergements
+# Priorité à la configuration Supabase PostgreSQL
 if os.environ.get('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
+        ssl_require=False,  # Mettre True en production si SSL est requis
     )
-    
-# Pour DigitalOcean avec SQLite persistent
-if os.environ.get('DO_SQLITE_PATH'):
+    print("Utilisation de PostgreSQL via Supabase")
+# Configuration SQLite persistante sur DigitalOcean (désactivée si DATABASE_URL est défini)
+elif os.environ.get('DO_SQLITE_PATH'):
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.environ.get('DO_SQLITE_PATH', str(BASE_DIR / 'db.sqlite3')),
     }
+    print("Utilisation de SQLite persistant sur DigitalOcean")
+else:
+    print("Utilisation de SQLite local")
 
 
 # Password validation
