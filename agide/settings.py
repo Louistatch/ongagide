@@ -119,12 +119,22 @@ DATABASES = {
 
 # Priorité à la configuration Supabase PostgreSQL
 if os.environ.get('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True,  # Activer SSL pour la connexion à Supabase
-    )
-    print("Utilisation de PostgreSQL via Supabase")
+    try:
+        # Test de connexion rapide à Supabase
+        import psycopg2
+        supabase_dsn = os.environ.get('DATABASE_URL')
+        conn = psycopg2.connect(supabase_dsn, connect_timeout=5)
+        conn.close()
+        # Appliquer la configuration PostgreSQL
+        DATABASES['default'] = dj_database_url.config(
+            default=supabase_dsn,
+            conn_max_age=600,
+            ssl_require=True,
+        )
+        print("Utilisation de PostgreSQL via Supabase")
+    except Exception as e:
+        # En cas d'échec, on reste sur SQLite
+        print(f"Impossible de se connecter à Supabase ({e}), utilisation de SQLite local")
 # Configuration SQLite persistante sur DigitalOcean (désactivée si DATABASE_URL est défini)
 elif os.environ.get('DO_SQLITE_PATH'):
     DATABASES['default'] = {
