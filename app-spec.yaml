@@ -25,8 +25,8 @@ services:
     http_port: 8080
     routes:
       - path: /
-    volumes:
-      - name: sqlite-data
+    volume_mounts:
+      - volume: sqlite-data
         mount_path: /data
     envs:
       - key: DISABLE_COLLECTSTATIC
