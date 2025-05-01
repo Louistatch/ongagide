@@ -17,6 +17,10 @@
     "DO_SQLITE_PATH": {
       "description": "Chemin vers le fichier SQLite sur DigitalOcean",
       "value": "/data/db.sqlite3"
+    },
+    "DATABASE_URL": {
+      "description": "URL de connexion à la base de données PostgreSQL Supabase",
+      "value": "postgresql://postgres:3991L@uis1993@db.ptmoaboqbpdwsriwlicp.supabase.co:5432/postgres"
     }
   },
   "buildpacks": [
