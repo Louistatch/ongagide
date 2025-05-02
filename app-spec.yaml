@@ -12,22 +12,13 @@ services:
       branch: "master"
     build_command: pip install -r requirements.txt && if [ "$DISABLE_COLLECTSTATIC" != "1" ]; then python manage.py collectstatic --noinput; fi
     run_command: |
-      echo "---- Debug SQLite Setup ----"
-      echo "DO_SQLITE_PATH = $DO_SQLITE_PATH"
-      echo "Ensuring /data exists and permissions are correct"
       mkdir -p /data
       chmod -R a+rwx /data
-      echo "/data contents:" && ls -la /data || true
-      echo "Starting migrations"
       python manage.py migrate --noinput
-      echo "Migrations done, launching Gunicorn"
       gunicorn agide.wsgi:application --bind 0.0.0.0:$PORT
     http_port: 8080
     routes:
       - path: /
-    volume_mounts:
-      - volume: sqlite-data
-        mount_path: /data
     envs:
       - key: DISABLE_COLLECTSTATIC
         value: "1"
@@ -39,12 +30,18 @@ services:
         value: "django-insecure-^t+)smnf$)a*&kr0x$-d=q+0vtl%al=b0)3v9d)#o8uvcmftg&"
         scope: RUN_AND_BUILD_TIME
       - key: ALLOWED_HOSTS
-        value: ".ondigitalocean.app,agidetogo.com,www.agidetogo.com"
+        value: "*"
         scope: RUN_AND_BUILD_TIME
       - key: DO_SQLITE_PATH
         value: "/data/db.sqlite3"
         scope: RUN_AND_BUILD_TIME
+    volumes:
+      - sqlite-data
+
+# NOTE: Persistent storage must be attached via the App Platform UI under "Volumes"
+# Attach a volume named 'sqlite-data' to mount at /data with at least 1 GB size.
 
 volumes:
   - name: sqlite-data
-    size_gigabytes: 1 
+    mount_path: /data
+    size_gigabytes: 1
