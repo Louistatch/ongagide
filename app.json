@@ -18,22 +18,6 @@
       "description": "Chemin vers le fichier SQLite sur DigitalOcean",
       "value": "/data/db.sqlite3"
     },
-    "DATABASE_URL": {
-      "description": "URL de connexion à la base de données PostgreSQL Supabase",
-      "value": "postgresql://postgres:3991L%40uis1993@db.ptmoaboqbpdwsriwlicp.supabase.co:5432/postgres?sslmode=require"
-    },
-    "SUPABASE_URL": {
-      "description": "URL du projet Supabase",
-      "value": "https://ptmoaboqbpdwsriwlicp.supabase.co"
-    },
-    "SUPABASE_KEY": {
-      "description": "Clé anonyme Supabase (ANON key)",
-      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0bW9hYm9xYnBkd3NyaXdsaWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYwOTc0NjEsImV4cCI6MjA2MTY3MzQ2MX0.xrFeNs2YeUxTOdPF2bYvXj7kk_CZWe4Fe5CcDBuSvrM"
-    },
-    "SUPABASE_JWT_SECRET": {
-      "description": "Service Role Key Supabase (JWT secret)",
-      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB0bW9hYm9xYnBkd3NyaXdsaWNwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjA5NzQ2MSwiZXhwIjoyMDYxNjczNDYxfQ.KQ98qbAx4NPsLuQQ_9LyP7wQ-FfgDpdeVDWzneltyQQ"
-    },
     "SECRET_KEY": {
       "description": "Clé secrète Django",
       "value": "django-insecure-^t+)smnf$)a*&kr0x$-d=q+0vtl%al=b0)3v9d)#o8uvcmftg&"
